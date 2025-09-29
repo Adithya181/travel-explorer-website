@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Explorer</title>
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Travel Explorer</h1>
+        <div class="theme-switch-wrapper">
+            <label class="theme-switch" for="checkbox">
+                <input type="checkbox" id="checkbox" />
+                <div class="slider round"></div>
+            </label>
+        </div>
+    </header>
+
+    <main>
+        <section class="history-section">
+            <h4>Recent Searches:</h4>
+            <ul id="history-list"></ul>
+        </section>
+
+        <section class="search-section">
+            <h2>Discover Your Next Destination</h2>
+            <div class="input-wrapper">
+                <input type="text" id="destination-input" placeholder="Enter a city...">
+                <button id="search-button">Search</button>
+            </div>
+        </section>
+
+        <div id="loading-spinner" class="hidden"></div>
+
+        <section id="results-section" class="hidden">
+            <h3 id="destination-title"></h3>
+            
+            <div id="map-container" class="card">
+                <h4>Location Map</h4>
+                <div id="map"></div>
+            </div>
+
+            <div id="weather-container" class="card">
+                <h4>Current Weather</h4>
+                <div id="weather-data"></div>
+            </div>
+
+            <div id="photos-container" class="card">
+                <h4>Destination Photos</h4>
+                <div id="photos-grid"></div>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <script src="script.js"></script>
+</body>
+</html>

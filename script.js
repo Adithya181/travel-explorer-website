@@ -1,11 +1,6 @@
-// -----------------------------------------------------------------
-// --- IMPORTANT: REPLACE WITH YOUR ACTUAL API KEYS! ---
-// -----------------------------------------------------------------
 const WEATHER_API_KEY = '47ef032222172dda4ea635c94c5957ef';
 const UNSPLASH_ACCESS_KEY = 'HVLSky8ZlP3SDKXnDNFaIVNvTf7R6DwwNjr0yPBPa20';
 const MAPTILER_API_KEY = 'ZHQR7iuwI2vSLPjpXP1G';
-
-// --- DOM ELEMENT SELECTION ---
 const destinationInput = document.getElementById('destination-input');
 const searchButton = document.getElementById('search-button');
 const resultsSection = document.getElementById('results-section');
@@ -15,11 +10,7 @@ const photosGrid = document.getElementById('photos-grid');
 const loadingSpinner = document.getElementById('loading-spinner');
 const historyList = document.getElementById('history-list');
 const themeToggle = document.getElementById('checkbox');
-
-// --- GLOBAL VARIABLES ---
-let map; // To hold the map instance
-
-// --- EVENT LISTENERS ---
+let map; 
 searchButton.addEventListener('click', () => {
     const destination = destinationInput.value.trim();
     if (destination) {
@@ -28,7 +19,6 @@ searchButton.addEventListener('click', () => {
         alert('Please enter a destination.');
     }
 });
-
 themeToggle.addEventListener('change', () => {
     document.body.classList.toggle('dark-mode');
     // Save theme preference
@@ -38,7 +28,6 @@ themeToggle.addEventListener('change', () => {
         localStorage.setItem('theme', 'light-mode');
     }
 });
-
 document.addEventListener('DOMContentLoaded', () => {
     loadHistory();
     // Load saved theme
@@ -48,8 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
         themeToggle.checked = true;
     }
 });
-
-// --- CORE DATA FETCHING FUNCTION ---
 async function fetchData(destination) {
     loadingSpinner.classList.remove('hidden');
     resultsSection.classList.add('hidden');
@@ -76,8 +63,6 @@ async function fetchData(destination) {
         loadingSpinner.classList.add('hidden');
     }
 }
-
-// --- UI DISPLAY FUNCTIONS ---
 function displayAllData(destination, weather, photoArray) {
     resultsSection.classList.remove('hidden');
     destinationTitle.textContent = destination;
@@ -94,9 +79,8 @@ function displayWeather(data) {
         <p><strong>Humidity:</strong> ${data.main.humidity}%</p>
     `;
 }
-
 function displayPhotos(photoArray) {
-    photosGrid.innerHTML = ''; // Clear previous photos
+    photosGrid.innerHTML = '';
     if (photoArray.length === 0) {
         photosGrid.innerHTML = '<p>No photos found for this destination.</p>';
         return;
@@ -110,29 +94,27 @@ function displayPhotos(photoArray) {
 }
 
 function initializeMap(lat, lon, destinationName) {
-    if (map) { // If map already exists, just update its view
+    if (map) { 
         map.setView([lat, lon], 13);
-    } else { // Otherwise, create the map
+    } else { 
         map = L.map('map').setView([lat, lon], 13);
         L.tileLayer('https://api.maptiler.com/maps/streets-v2/{z}/{x}/{y}.png?key={apiKey}', {
             apiKey: MAPTILER_API_KEY,
             attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
         }).addTo(map);
     }
-    // Add or update the marker
     L.marker([lat, lon]).addTo(map)
         .bindPopup(`<b>${destinationName}</b>`)
         .openPopup();
 }
 
-// --- LOCAL STORAGE FUNCTIONS ---
 function saveToHistory(destination) {
     let history = JSON.parse(localStorage.getItem('travelHistory')) || [];
     const lowerCaseDestination = destination.toLowerCase();
-    // Prevent duplicates
+   
     if (!history.includes(lowerCaseDestination)) {
-        history.unshift(lowerCaseDestination); // Add to the beginning
-        history = history.slice(0, 5); // Keep only the 5 most recent
+        history.unshift(lowerCaseDestination); 
+        history = history.slice(0, 5); 
         localStorage.setItem('travelHistory', JSON.stringify(history));
     }
     loadHistory();
